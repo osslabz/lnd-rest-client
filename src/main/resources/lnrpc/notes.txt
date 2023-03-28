@@ -1,0 +1,12 @@
+https://github.com/lightningnetwork/lnd/blob/master/lnrpc/lightning.swagger.json
+
+
+Commits on Feb 28, 2023 c26917ee1fcf7975a0d58a2ebb02f438217dd3f6
+
+=> replace
+
+"operationId": "Lightning_
+
+with
+
+"operationId": "
