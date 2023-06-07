@@ -1,8 +1,8 @@
 # lnd-rest-client
 
-![GitHub](https://img.shields.io/github/license/osslabz/lnd-http-client)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-http-client/maven.yml?branch=main)
-[![Maven Central](https://img.shields.io/maven-central/v/net.osslabz/lnd-http-client?label=Maven%20Central)](https://search.maven.org/artifact/net.osslabz/lnd-http-client)
+![GitHub](https://img.shields.io/github/license/osslabz/lnd-rest-client)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/maven.yml?branch=main)
+[![Maven Central](https://img.shields.io/maven-central/v/net.osslabz/lnd-rest-client?label=Maven%20Central)](https://search.maven.org/artifact/net.osslabz/lnd-rest-client)
 
 lnd-http-client is a simple client to interact with [Lightning Network Daemon (LND)](https://github.com/lightningnetwork/lnd) via it's REST API.
 Thanks to the [API's excellent documentation](https://lightning.engineering/api-docs/api/lnd/) the client is simply generated based on it's swagger
@@ -12,9 +12,9 @@ If you prefer LND's gRPC API please have a look at [LighntingJ](https://www.ligh
 
 ## Why this client?
 
-This library mostly exists because when I needed such a library lighninj was't (yet) supported on Apple Silicon....
+This library mostly exists because when I needed such a library [LighntingJ](https://www.lightningj.org/). wasn't (yet) supported on Apple Silicon....
 
-Other advantages are
+Other advantages are:
 
 - it's very easy to review (which you should always do when you handle any valuable assets, crypto or otherwise)
 - it supports good old HTTP/1.1 while gRPC is build on http/2. In a perfect world we would all have migrated to http/2 already but there might be
@@ -31,7 +31,7 @@ Other advantages are
 <dependency>
     <groupId>net.osslabz</groupId>
     <artifactId>lnd-rest-client</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 

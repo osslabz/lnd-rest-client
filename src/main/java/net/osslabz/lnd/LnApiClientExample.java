@@ -23,7 +23,7 @@ public class LnApiClientExample {
         LndApiClient lndApiClient = new LndApiClient(lndHost, lndPort, lndCertPath, lndMacaroonPath, true);
 
         LnrpcNetworkInfo lnrpcNetworkInfo = lndApiClient.getLightningApi().getNetworkInfo();
-
+        
         log.debug("network info: {}", lnrpcNetworkInfo);
     }
 }
