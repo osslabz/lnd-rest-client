@@ -5,13 +5,12 @@
 
     <groupId>net.osslabz</groupId>
     <artifactId>lnd-rest-client</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>This package decouples my bitcoin related libraries from the underlying implementation although it seems unlikely this will ever
-        change ;-)
+    <description>lnd-http-client is a simple client to interact with Lightning Network Daemon (LND) via it's REST API.
     </description>
-    <url>https://github.com/osslabz/bitcoin-commons</url>
+    <url>https://github.com/osslabz/lnd-rest-client</url>
 
     <properties>
         <osslabz.encoding>UTF-8</osslabz.encoding>
