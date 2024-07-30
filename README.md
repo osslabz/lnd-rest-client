@@ -1,7 +1,7 @@
 # lnd-rest-client
 
 ![GitHub](https://img.shields.io/github/license/osslabz/lnd-rest-client)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/maven.yml?branch=main)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/build-on-push.yml?branch=main)
 [![Maven Central](https://img.shields.io/maven-central/v/net.osslabz/lnd-rest-client?label=Maven%20Central)](https://search.maven.org/artifact/net.osslabz/lnd-rest-client)
 
 lnd-http-client is a simple client to interact with [Lightning Network Daemon (LND)](https://github.com/lightningnetwork/lnd) via it's REST API.
