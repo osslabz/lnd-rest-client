@@ -5,7 +5,7 @@
 
     <groupId>net.osslabz</groupId>
     <artifactId>lnd-rest-client</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>lnd-http-client is a simple client to interact with Lightning Network Daemon (LND) via it's REST API.
