@@ -10,6 +10,9 @@ definition.
 
 If you prefer LND's gRPC API please have a look at [LighntingJ](https://www.lightningj.org/).
 
+1.0.1 is from June 2023 and is the only version on Maven Central; the 1.0.2 tag in this repo was never published. The hand-written code has
+not changed since that release, there are no tests, and the only consumer is a private project of mine.
+
 ## Why this client?
 
 This library mostly exists because when I needed such a library [LighntingJ](https://www.lightningj.org/). wasn't (yet) supported on Apple Silicon....
@@ -31,7 +34,7 @@ Other advantages are:
 <dependency>
     <groupId>net.osslabz</groupId>
     <artifactId>lnd-rest-client</artifactId>
-    <version>0.0.2</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
