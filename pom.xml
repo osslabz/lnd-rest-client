@@ -44,8 +44,8 @@
     </developers>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/osslabz/lnd-rest-client.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/osslabz/lnd-rest-client.git</developerConnection>
+        <connection>scm:git:https://github.com/osslabz/lnd-rest-client.git</connection>
+        <developerConnection>scm:git:https://github.com/osslabz/lnd-rest-client.git</developerConnection>
         <url>https://github.com/osslabz/lnd-rest-client</url>
         <tag>main</tag>
     </scm>
