@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/osslabz/lnd-rest-client)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/build-on-push.yml?branch=dev&label=build&logo=git)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/build-release-on-main-push.yml?branch=main&label=perform-release&logo=semanticrelease)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/osslabz/lnd-rest-client/release.yml?branch=dev&label=perform-release&logo=semanticrelease)
 [![Reproducible Builds](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jvm-repo-rebuild/reproducible-central/master/content/net/osslabz/lnd-rest-client/badge.json)](https://github.com/jvm-repo-rebuild/reproducible-central/blob/master/content/net/osslabz/lnd-rest-client/README.md)
 [![Maven Central](https://img.shields.io/maven-central/v/net.osslabz/lnd-rest-client?label=Maven%20Central)](https://search.maven.org/artifact/net.osslabz/lnd-rest-client)
 
