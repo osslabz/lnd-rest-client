@@ -178,6 +178,14 @@
                                 </goals>
                                 <configuration>
                                     <doclint>none</doclint>
+                                    <!-- openapi-generator writes this tag into every generated API method. -->
+                                    <tags>
+                                        <tag>
+                                            <name>http.response.details</name>
+                                            <placement>a</placement>
+                                            <head>Response Details:</head>
+                                        </tag>
+                                    </tags>
                                     <failOnError>false</failOnError>
                                 </configuration>
                             </execution>
