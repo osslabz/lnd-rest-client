@@ -13,7 +13,7 @@ definition.
 If you prefer LND's gRPC API please have a look at [LighntingJ](https://www.lightningj.org/).
 
 1.0.1 is from June 2023 and is the only version on Maven Central; the 1.0.2 tag in this repo was never published. The hand-written code has
-not changed since that release, there are no tests, and the only consumer is a private project of mine.
+not changed since that release, and the only consumer is a private project of mine. Its tests run offline against a local HTTPS server.
 
 ## Why this client?
 
@@ -64,11 +64,11 @@ search that repository by default, so a build that wants a snapshot declares it:
 
 
 ```java
-    String lndHost="127.0.0.1";
+    String lndHost="localhost";
     int lndPort=8080;
 
-    String lndCertPath="/path/to/tls.cert";
-    String lndMacaroonPath="/path/to/readonly.macaroon";
+    String lndCertPath=Path.of(System.getProperty("user.home"),".lnd","tls.cert").toString();
+    String lndMacaroonPath=Path.of(System.getProperty("user.home"),".lnd","data","chain","bitcoin","mainnet","readonly.macaroon").toString();
 
     LndApiClient lndApiClient=new LndApiClient(lndHost,lndPort,lndCertPath,lndMacaroonPath,true);
 
