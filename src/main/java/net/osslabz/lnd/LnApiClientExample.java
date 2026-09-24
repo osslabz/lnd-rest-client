@@ -11,7 +11,6 @@ public class LnApiClientExample {
 
     private static Logger log = LoggerFactory.getLogger(LnApiClientExample.class);
 
-
     public static void main(String[] args) throws Exception {
 
         String lndHost = "127.0.0.1";
@@ -23,7 +22,7 @@ public class LnApiClientExample {
         LndApiClient lndApiClient = new LndApiClient(lndHost, lndPort, lndCertPath, lndMacaroonPath, true);
 
         LnrpcNetworkInfo lnrpcNetworkInfo = lndApiClient.getLightningApi().getNetworkInfo();
-        
+
         log.debug("network info: {}", lnrpcNetworkInfo);
     }
 }
