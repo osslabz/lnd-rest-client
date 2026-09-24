@@ -1,5 +1,6 @@
 package net.osslabz.lnd;
 
+import java.nio.file.Path;
 import net.osslabz.lnd.dto.LnrpcNetworkInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +14,20 @@ public class LnApiClientExample {
 
     public static void main(String[] args) throws Exception {
 
-        String lndHost = "127.0.0.1";
+        String lndHost = "localhost";
         int lndPort = 8080;
 
-        String lndCertPath = "/path/to/tls.cert";
-        String lndMacaroonPath = "/path/to/readonly.macaroon";
+        String lndCertPath =
+                Path.of(System.getProperty("user.home"), ".lnd", "tls.cert").toString();
+        String lndMacaroonPath = Path.of(
+                        System.getProperty("user.home"),
+                        ".lnd",
+                        "data",
+                        "chain",
+                        "bitcoin",
+                        "mainnet",
+                        "readonly.macaroon")
+                .toString();
 
         LndApiClient lndApiClient = new LndApiClient(lndHost, lndPort, lndCertPath, lndMacaroonPath, true);
 
