@@ -125,6 +125,12 @@ class LndApiClientTest {
         return server.takeRequest(5, TimeUnit.SECONDS);
     }
 
+    private void assertMacaroonNotLogged() {
+        assertTrue(
+                okHttpLog.stream().noneMatch(line -> line.contains(MACAROON_HEX)),
+                () -> "macaroon logged in " + okHttpLog);
+    }
+
     @Test
     void callsTheNodeOverTlsTrustingItsCertificateAndSendsTheMacaroonAsHex() throws Exception {
         HeldCertificate certificate = nodeCertificate();
@@ -156,6 +162,35 @@ class LndApiClientTest {
                 okHttpLog.contains("--> GET https://" + HOST + ":" + server.getPort() + "/v1/graph/info"),
                 () -> "request line missing from " + okHttpLog);
         assertTrue(okHttpLog.contains(NETWORK_INFO), () -> "response body missing from " + okHttpLog);
+    }
+
+    @Test
+    void redactsTheMacaroonFromTheDebugLog() throws Exception {
+        HeldCertificate certificate = nodeCertificate();
+        serveTls(certificate);
+        respond(200, NETWORK_INFO);
+        LndApiClient client = new LndApiClient(HOST, server.getPort(), certFile(certificate), macaroonFile(), true);
+
+        client.getLightningApi().getNetworkInfo();
+
+        assertTrue(okHttpLog.contains("Grpc-Metadata-macaroon: ██"), () -> "redacted header missing from " + okHttpLog);
+        assertMacaroonNotLogged();
+    }
+
+    @Test
+    void keepsTheMacaroonRedactedWhenDebugIsSwitchedOffAndOnAgain() throws Exception {
+        HeldCertificate certificate = nodeCertificate();
+        serveTls(certificate);
+        respond(200, NETWORK_INFO);
+        LndApiClient client = new LndApiClient(HOST, server.getPort(), certFile(certificate), macaroonFile(), true);
+        ApiClient apiClient = client.getLightningApi().getApiClient();
+
+        apiClient.setDebugging(false);
+        apiClient.setDebugging(true);
+        client.getLightningApi().getNetworkInfo();
+
+        assertTrue(okHttpLog.contains("Grpc-Metadata-macaroon: ██"), () -> "redacted header missing from " + okHttpLog);
+        assertMacaroonNotLogged();
     }
 
     @Test

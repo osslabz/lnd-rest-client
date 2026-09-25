@@ -80,3 +80,5 @@ search that repository by default, so a build that wants a snapshot declares it:
 ### Logging
 
 The actual client uses slf4j-api but doesn't package an implementation. This is up to the using application.
+With `debug` set to `true`, OkHttp logs every request and response in full through `java.util.logging`. The macaroon
+header shows up as `██` there.

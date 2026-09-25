@@ -8,6 +8,8 @@ import org.apache.commons.io.IOUtils;
 
 public class LndApiClient {
 
+    private static final String MACAROON_HEADER = "Grpc-Metadata-macaroon";
+
     private final ApiClient apiClient;
 
     private final LightningApi lightningClient;
@@ -32,19 +34,32 @@ public class LndApiClient {
     private static ApiClient createApiClient(
             String host, int port, String lndCertPath, String lndMacaroonPath, boolean debug) {
         try {
-            ApiClient apiClient = new ApiClient();
+            ApiClient apiClient = new MacaroonRedactingApiClient();
             apiClient.setBasePath("https://" + host + ":" + port);
             apiClient.setSslCaCert(new BufferedInputStream(new FileInputStream(lndCertPath)));
             apiClient.setConnectTimeout(10 * 1000);
             apiClient.setReadTimeout(60 * 1000);
             apiClient.addDefaultHeader(
-                    "Grpc-Metadata-macaroon",
+                    MACAROON_HEADER,
                     Hex.encodeHexString(
                             IOUtils.toByteArray(new BufferedInputStream(new FileInputStream(lndMacaroonPath)))));
             apiClient.setDebugging(debug);
             return apiClient;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /** Keeps the macaroon, a bearer credential, out of the debug log. */
+    private static final class MacaroonRedactingApiClient extends ApiClient {
+
+        @Override
+        public ApiClient setDebugging(boolean debugging) {
+            super.setDebugging(debugging);
+            if (loggingInterceptor != null) {
+                loggingInterceptor.redactHeader(MACAROON_HEADER);
+            }
+            return this;
         }
     }
 }
