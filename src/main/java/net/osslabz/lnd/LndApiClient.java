@@ -1,10 +1,11 @@
 package net.osslabz.lnd;
 
-import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import net.osslabz.lnd.api.LightningApi;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.IOUtils;
 
 public class LndApiClient {
 
@@ -36,17 +37,20 @@ public class LndApiClient {
         try {
             ApiClient apiClient = new MacaroonRedactingApiClient();
             apiClient.setBasePath("https://" + host + ":" + port);
-            apiClient.setSslCaCert(new BufferedInputStream(new FileInputStream(lndCertPath)));
+            apiClient.setSslCaCert(new ByteArrayInputStream(readFile(lndCertPath)));
             apiClient.setConnectTimeout(10 * 1000);
             apiClient.setReadTimeout(60 * 1000);
-            apiClient.addDefaultHeader(
-                    MACAROON_HEADER,
-                    Hex.encodeHexString(
-                            IOUtils.toByteArray(new BufferedInputStream(new FileInputStream(lndMacaroonPath)))));
+            apiClient.addDefaultHeader(MACAROON_HEADER, Hex.encodeHexString(readFile(lndMacaroonPath)));
             apiClient.setDebugging(debug);
             return apiClient;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static byte[] readFile(String path) throws IOException {
+        try (InputStream in = new FileInputStream(path)) {
+            return in.readAllBytes();
         }
     }
 

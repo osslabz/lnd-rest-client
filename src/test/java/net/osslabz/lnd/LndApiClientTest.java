@@ -12,13 +12,16 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javax.net.ssl.SSLHandshakeException;
 import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
@@ -30,6 +33,8 @@ import okhttp3.tls.HeldCertificate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.io.TempDir;
 
 class LndApiClientTest {
@@ -125,6 +130,21 @@ class LndApiClientTest {
         return server.takeRequest(5, TimeUnit.SECONDS);
     }
 
+    /** What this JVM's open file descriptors point at, as the Linux kernel reports them. */
+    private static List<Path> openFiles() throws IOException {
+        List<Path> openFiles = new ArrayList<>();
+        try (Stream<Path> descriptors = Files.list(Path.of("/proc/self/fd"))) {
+            for (Path descriptor : descriptors.toList()) {
+                try {
+                    openFiles.add(Files.readSymbolicLink(descriptor));
+                } catch (NoSuchFileException closedMeanwhile) {
+                    // the listing's own descriptor, or one another thread closed since
+                }
+            }
+        }
+        return openFiles;
+    }
+
     private void assertMacaroonNotLogged() {
         assertTrue(
                 okHttpLog.stream().noneMatch(line -> line.contains(MACAROON_HEX)),
@@ -218,6 +238,19 @@ class LndApiClientTest {
 
         assertEquals(500, thrown.getCode());
         assertEquals(error, thrown.getResponseBody());
+    }
+
+    @Test
+    @EnabledOnOs(OS.LINUX)
+    void closesTheCertificateAndMacaroonFilesOnceRead() throws Exception {
+        Path cert = Path.of(certFile(nodeCertificate())).toRealPath();
+        Path macaroon = Path.of(macaroonFile()).toRealPath();
+
+        new LndApiClient(HOST, 8080, cert.toString(), macaroon.toString());
+
+        assertEquals(
+                List.of(),
+                openFiles().stream().filter(List.of(cert, macaroon)::contains).toList());
     }
 
     @Test
