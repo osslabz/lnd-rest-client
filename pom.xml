@@ -357,7 +357,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.15</version>
+                <version>0.8.16</version>
                 <configuration>
                     <!-- The generated API client shares the net.osslabz.lnd package with the
                          handwritten classes, so its classes are listed by name. The floor
